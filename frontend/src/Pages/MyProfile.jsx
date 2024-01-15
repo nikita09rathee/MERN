@@ -4,15 +4,22 @@ import axios from "axios";
 const MyProfile = () => {
   const stored = JSON.parse(localStorage.getItem("userInfo"));
   const name = stored?.data?.name || "";
-  const number = stored?.data?.phone || "";
-  const address = stored?.data?.address || "";
+  // const number = stored?.data?.phone || "";
+  const [number, setNumber] = useState(stored?.data?.phone || "");
+  // const address = stored?.data?.address || "";
+  const[address,setAddress]=useState(stored?.data?.address || "")
   const [location, setLocation] = useState(address);
   const [phone, setPhone] = useState(number);
   const total = JSON.parse(localStorage.getItem("totalMytask"));
   const token = stored.token;
-
+  const [editphone, setEditphone] = useState(stored?.data?.phone ? false : true );
+  const [editAddress, setEditaddress] = useState(
+    stored?.data?.address ? false : true
+  );
   const handleSubmit = async (id, e) => {
     e.preventDefault();
+    console.log("fdghj");
+
     const payload = {
       name: name,
       email: stored.data.email,
@@ -35,8 +42,17 @@ const MyProfile = () => {
         payload,
         config
       );
-      console.log(data);
-      alert("Your phone number has been successfully added");
+      console.log(data.data);
+      localStorage.setItem("userInfo", JSON.stringify(data.data));
+      if (phone) {
+        setEditphone(false);
+        setNumber(phone);
+      }
+      if (location) {
+        setEditaddress(false);
+        setAddress(location);
+      }
+      alert("Your data has been successfully added");
     } catch (error) {
       console.log(error);
     }
@@ -46,7 +62,6 @@ const MyProfile = () => {
     setLocation(e.target.value);
   };
 
-  
   return (
     <div className="bg-gray-800 min-h-screen flex items-center justify-center">
       <div className="max-w-3xl bg-white shadow-md p-8 rounded-md">
@@ -81,7 +96,7 @@ const MyProfile = () => {
                 Phone Number
               </dt>
               <dd className="mt-1 ml-9 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                {phone === "" ? (
+                {editphone ? (
                   <form
                     onSubmit={(e) => handleSubmit(stored.data._id, e)}
                     className="flex"
@@ -100,7 +115,15 @@ const MyProfile = () => {
                   </form>
                 ) : (
                   <p className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                    {phone}
+                    {number}{" "}
+                    {/* <span onClick={() => setEditphone(true)}>edit</span> */}
+                    <button
+                      onClick={() => setEditphone(true)}
+                      type="submit"
+                      className="ml-4 px-4 py-2 bg-gray-900 text-white rounded-md hover:bg-gray-600 focus:outline-none focus:ring focus:border-indigo-300 active:bg-indigo-800"
+                    >
+                      Edit
+                    </button>
                   </p>
                 )}
               </dd>
@@ -118,11 +141,14 @@ const MyProfile = () => {
                 Address
               </dt>
               <dd className="mt-1 ml-9 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                {location === "" ? (
-                  <form onSubmit={handleSubmit} className="flex">
+                {editAddress ? (
+                  <form
+                    onSubmit={(e) => handleSubmit(stored.data._id, e)}
+                    className="flex"
+                  >
                     <input
                       placeholder="add address"
-                      value={address}
+                      value={location}
                       onChange={handleAddressChange}
                     />
                     <button
@@ -134,7 +160,14 @@ const MyProfile = () => {
                   </form>
                 ) : (
                   <p className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                    {location}
+                    {address}
+                    <button
+                      onClick={() => setEditaddress(true)}
+                      type="submit"
+                      className="ml-4 px-4 py-2 bg-gray-900 text-white rounded-md hover:bg-gray-600 focus:outline-none focus:ring focus:border-indigo-300 active:bg-indigo-800"
+                    >
+                      Edit
+                    </button>
                   </p>
                 )}
               </dd>

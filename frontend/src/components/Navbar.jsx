@@ -1,7 +1,7 @@
 import { Fragment, useContext,useState } from "react";
-// import TaskPopup from "./TaskPopup";
+
 import { Disclosure, Menu, Transition } from "@headlessui/react";
-// import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+
 import { AuthContext } from "../context/auth.context";
 const navigation = [
     { name: "Add Task", href: "/addtask", current: false },

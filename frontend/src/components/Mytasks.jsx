@@ -115,7 +115,7 @@ const Mytasks = () => {
               </div>
               <div className="flex gap-2 mt-2">
                 <button
-                  className="text-blue-500 hover:text-blue-700"
+                  className="text-gray-900 hover:text-blue-700"
                   onClick={() => handleUpdateClick(person._id)}
                 >
                   Update
