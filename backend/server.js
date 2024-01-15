@@ -8,9 +8,9 @@ const {taskController}=require("./controller/task.controller")
 const { connection } = require("./config/db");
 const {userController}=require("./controller/user.controller")
 app.use(express.json());
-// app.use(cors({
-//       origin:["http://localhost:3000"]
-// }))
+app.use(cors({
+      origin:["http://localhost:3000"]
+}))
 app.get("/",(req,res)=>{
       res.send("welcome");
 }) 

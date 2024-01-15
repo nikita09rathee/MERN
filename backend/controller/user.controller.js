@@ -59,7 +59,7 @@ userController.put("/update/:userId", async (req, res) => {
     const userId = req.params.userId;
     console.log(userId);
     try {
-        const {  name, email, password, username,address, profile ,} = req.body;
+        const {  name, email, password, username,address, phone ,profile} = req.body;
 
         // You can add additional validation if needed
         if ( !name || !email || !password || !username) {
@@ -83,7 +83,8 @@ userController.put("/update/:userId", async (req, res) => {
         user.password = await bcrypt.hash(password, 5); 
         user.username = username;
         user.profile = profile; 
- user.address = address;
+        user.address = address;
+        user.phone = phone;
         // Save the updated user
         await user.save();
 

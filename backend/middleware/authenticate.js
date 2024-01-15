@@ -8,6 +8,7 @@ const authenticate = (req, res, next) => {
         else {
             console.log(decoded);
             req.userId = decoded.userId;
+            console.log(decoded.userId);
             next();
         }
     })
